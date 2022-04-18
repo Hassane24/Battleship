@@ -1,1 +1,0 @@
-console.log({name:"carrier",position:[1,2,3],hits:[]});
