@@ -1,21 +1,33 @@
-function ships(name, position) {
-  let sunken = false;
-  let length = position.length;
-  let hits = [];
+function ships(name, length) {
+  const ship = {
+    name,
+    length,
+    position: new Array(length).fill(null),
+    sunken: false,
+  };
+
+  const getName = () => {
+    return ship.name;
+  };
+  const getLength = () => {
+    return ship.length;
+  };
+  const getPosition = () => {
+    return ship.position;
+  };
+  const shipState = () => {
+    return ship.sunken;
+  };
+
   const hit = (index) => {
-    hits[index] = "hit";
+    ship.position[index] = "hit";
   };
 
   const isSunk = () => {
-    if (length == 0) return (sunken = true);
-    hits.forEach((hit, i) => {
-      position.forEach((cell, j) => {
-        if (hit == "hit" && cell[j] == i) length -= 1;
-      });
-    });
+    if (ship.position.every((pos) => pos == "hit")) ship.sunken = true;
   };
 
-  return { name, position, hits, sunken };
+  return { getLength, getName, getPosition, shipState, hit, isSunk };
 }
 
 export { ships };
