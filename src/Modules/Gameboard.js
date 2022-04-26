@@ -14,18 +14,20 @@ function gameBoard() {
       [null, null, null, null, null, null, null, null, null, null],
     ],
   };
+
   const getBoard = () => {
     return gameboard.board;
   };
+
   const shipPlacement = (length, { x, y }, orientation) => {
     if (orientation === "X" && checkBoard(length, { x, y }, orientation)) {
-      for (let i = y; i < length; i++) {
+      for (let i = y; i < length + y; i++) {
         gameboard.board[x][i] = "carrier";
       }
     }
 
     if (orientation === "Y" && checkBoard(length, { x, y }, orientation)) {
-      for (let i = x; i < length; i++) {
+      for (let i = x; i < length + x; i++) {
         gameboard.board[i][y] = "carrier";
       }
     }
