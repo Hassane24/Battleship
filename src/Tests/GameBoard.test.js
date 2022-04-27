@@ -79,6 +79,23 @@ test("placement method shouldnt place ships if there isn't enough space", () => 
   ]);
 });
 
+test("placement method shouldnt place ships if there isn't enough space", () => {
+  const br = gameBoard();
+  br.shipPlacement(4, { x: 7, y: 7 }, "Y");
+  expect(br.getBoard()).toEqual([
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+  ]);
+});
+
 // checkBoard method tests
 
 test("checkBoard: true if board is populated, false if board isnt", () => {
