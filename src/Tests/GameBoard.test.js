@@ -9,6 +9,8 @@ test("getBoard method should return an array of arrays", () => {
   expect(gameBoard().getBoard()).toEqual(array);
 });
 
+// shipLocation tests
+
 test("shipLocation method should return an array of numbers X axis", () => {
   expect(
     gameBoard().shipLocation("horizontal", 10, [null, null, null, null])
@@ -21,26 +23,38 @@ test("shipLocation method should return an array of numbers X axis", () => {
   ).toEqual([10, 20, 30, 40]);
 });
 
-test("shipPlacement method should place ships at the indexes given by the shipLocation method Y axis", () => {
-  const array = [];
-  for (let i = 0; i < 100; i++) {
-    if (i == 0 || i == 1)
-      array.push({ hasShip: true, isHit: false, shipName: "destroyer" });
-    else array.push({ hasShip: false, isHit: false });
-  }
+// shipPlacement tests
+
+test("shipPlacement method should place ships at the indexes given by the shipLocation method X axis", () => {
   const br = gameBoard();
   br.shipPlacement("horizontal", 0, [null, null]);
-  expect(br.getBoard()).toEqual(array);
+  const array = br.getBoard();
+  expect(array[0].hasShip).toBeTruthy();
+  expect(array[1].hasShip).toBeTruthy();
+  expect(array[3].hasShip).toBeFalsy();
 });
 
 test("shipPlacement method should place ships at the indexes given by the shipLocation method Y axis", () => {
-  const array = [];
-  for (let i = 0; i < 100; i++) {
-    if (i == 0 || i == 10)
-      array.push({ hasShip: true, isHit: false, shipName: "destroyer" });
-    else array.push({ hasShip: false, isHit: false });
-  }
   const br = gameBoard();
   br.shipPlacement("vertical", 0, [null, null]);
-  expect(br.getBoard()).toEqual(array);
+  const array = br.getBoard();
+  expect(array[0].hasShip).toBeTruthy();
+  expect(array[10].hasShip).toBeTruthy();
+});
+
+// receiveAttack tests
+
+test("receiveAttack method should mark the coordinate given as hit (hasShip: false)", () => {
+  const br = gameBoard();
+  br.receiveAttack(0);
+  const array = br.getBoard();
+  expect(array[0].isHit).toBeTruthy();
+  expect(array[5].isHit).toBeFalsy();
+});
+
+test("receiveAttack method should keep track of missed shots", () => {
+  const br = gameBoard();
+  br.receiveAttack(50);
+  const array = br.getBoard();
+  expect(array[50].missedShot).toBeTruthy();
 });

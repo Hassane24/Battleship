@@ -33,13 +33,22 @@ function gameBoard() {
         gameboard.board.splice(location[j], 1, {
           hasShip: true,
           isHit: false,
-          shipName: gameboard.shipStore[i].getName(),
+          ship: gameboard.shipStore[i],
         });
       }
     }
   };
 
-  return { getBoard, shipLocation, shipPlacement };
+  const receiveAttack = (coordinate) => {
+    if (gameboard.board[coordinate].hasShip === false)
+      gameboard.board.splice(coordinate, 1, {
+        hasShip: false,
+        isHit: true,
+        missedShot: true,
+      });
+  };
+
+  return { getBoard, shipLocation, shipPlacement, receiveAttack };
 }
 
 export { gameBoard };
