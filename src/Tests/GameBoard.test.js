@@ -27,8 +27,8 @@ test("shipLocation method should return an array of numbers X axis", () => {
 
 test("shipPlacement method should place ships at the indexes given by the shipLocation method X axis", () => {
   const br = gameBoard();
-  br.shipPlacement("horizontal", 0, [null, null]);
   const array = br.getBoard();
+  br.shipPlacement("horizontal", 0, [null, null]);
   expect(array[0].hasShip).toBeTruthy();
   expect(array[1].hasShip).toBeTruthy();
   expect(array[3].hasShip).toBeFalsy();
@@ -36,8 +36,8 @@ test("shipPlacement method should place ships at the indexes given by the shipLo
 
 test("shipPlacement method should place ships at the indexes given by the shipLocation method Y axis", () => {
   const br = gameBoard();
-  br.shipPlacement("vertical", 0, [null, null]);
   const array = br.getBoard();
+  br.shipPlacement("vertical", 0, [null, null]);
   expect(array[0].hasShip).toBeTruthy();
   expect(array[10].hasShip).toBeTruthy();
 });
@@ -46,15 +46,24 @@ test("shipPlacement method should place ships at the indexes given by the shipLo
 
 test("receiveAttack method should mark the coordinate given as hit (hasShip: false)", () => {
   const br = gameBoard();
-  br.receiveAttack(0);
   const array = br.getBoard();
+  br.receiveAttack(0);
   expect(array[0].isHit).toBeTruthy();
   expect(array[5].isHit).toBeFalsy();
 });
 
 test("receiveAttack method should keep track of missed shots", () => {
   const br = gameBoard();
-  br.receiveAttack(50);
   const array = br.getBoard();
+  br.receiveAttack(50);
   expect(array[50].missedShot).toBeTruthy();
+});
+
+test("receiveAttack method should invoke the hit method on the ships if they're hit", () => {
+  const br = gameBoard();
+  const array = br.getBoard();
+  br.shipPlacement("vertical", 0, [null, null]);
+  br.receiveAttack(0);
+  br.receiveAttack(10);
+  expect(array[0].ship.getHits()).toEqual(["hit", "hit"]);
 });
