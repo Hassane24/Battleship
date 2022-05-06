@@ -7,7 +7,11 @@ function player(playing = false) {
     return state.playing;
   };
 
-  return { whoIsPlaying };
+  const switchRoles = () => {
+    return (state.playing = !state.playing);
+  };
+
+  return { whoIsPlaying, switchRoles };
 }
 
 export { player };
