@@ -9,26 +9,12 @@ test("getBoard method should return an array of arrays", () => {
   expect(gameBoard().getBoard()).toEqual(array);
 });
 
-// shipLocation tests
-
-test("shipLocation method should return an array of numbers X axis", () => {
-  expect(
-    gameBoard().shipLocation("horizontal", 10, [null, null, null, null])
-  ).toEqual([10, 11, 12, 13]);
-});
-
-test("shipLocation method should return an array of numbers X axis", () => {
-  expect(
-    gameBoard().shipLocation("vertical", 10, [null, null, null, null])
-  ).toEqual([10, 20, 30, 40]);
-});
-
 // shipPlacement tests
 
 test("shipPlacement method should place ships at the indexes given by the shipLocation method X axis", () => {
   const br = gameBoard();
   const array = br.getBoard();
-  br.shipPlacement("horizontal", 0, [null, null]);
+  br.shipPlacement("carrier", 2, "horizontal", 0);
   expect(array[0].hasShip).toBeTruthy();
   expect(array[1].hasShip).toBeTruthy();
   expect(array[3].hasShip).toBeFalsy();
@@ -37,7 +23,7 @@ test("shipPlacement method should place ships at the indexes given by the shipLo
 test("shipPlacement method should place ships at the indexes given by the shipLocation method Y axis", () => {
   const br = gameBoard();
   const array = br.getBoard();
-  br.shipPlacement("vertical", 0, [null, null]);
+  br.shipPlacement("carrier", 2, "vertical", 0);
   expect(array[0].hasShip).toBeTruthy();
   expect(array[10].hasShip).toBeTruthy();
 });
@@ -62,8 +48,16 @@ test("receiveAttack method should keep track of missed shots", () => {
 test("receiveAttack method should invoke the hit method on the ships if they're hit", () => {
   const br = gameBoard();
   const array = br.getBoard();
-  br.shipPlacement("vertical", 0, [null, null]);
+  br.shipPlacement("carrier", 2, "vertical", 0);
   br.receiveAttack(0);
   br.receiveAttack(10);
   expect(array[0].ship.getHits()).toEqual(["hit", "hit"]);
+});
+
+test("checkShipState method should return true if all ships have sunk", () => {
+  const br = gameBoard();
+  br.shipPlacement("carrier", 2, "horizontal", 0);
+  br.receiveAttack(0);
+  br.receiveAttack(1);
+  expect(br.checkShipState()).toBeTruthy();
 });

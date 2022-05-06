@@ -18,7 +18,7 @@ function gameBoard() {
   const shipLocation = (orientation, startingPosition, ship) => {
     // returns an array of numbers that represent indexes
     const location = [];
-    for (let i = 0; i < ship.length; i++) {
+    for (let i = 0; i < ship.getLength(); i++) {
       orientation === "horizontal"
         ? location.push(startingPosition + i)
         : location.push(startingPosition + i * 10);
@@ -26,29 +26,44 @@ function gameBoard() {
     return location;
   };
 
-  const shipPlacement = (orientation, startingPosition, ship) => {
-    for (let i = 0; i < gameboard.shipStore.length; i++) {
-      let location = shipLocation(orientation, startingPosition, ship);
-      for (let j = 0; j < location.length; j++) {
-        gameboard.board.splice(location[j], 1, {
-          hasShip: true,
-          isHit: false,
-          ship: gameboard.shipStore[i],
-        });
-      }
+  const shipPlacement = (name, length, orientation, startingPosition, Ship) => {
+    Ship = ships(name, length);
+    const location = shipLocation(orientation, startingPosition, Ship);
+    for (let j = 0; j < location.length; j++) {
+      gameboard.board.splice(location[j], 1, {
+        hasShip: true,
+        isHit: false,
+        ship: Ship,
+      });
     }
   };
 
   const receiveAttack = (coordinate) => {
-    if (gameboard.board[coordinate].hasShip === false)
+    if (gameboard.board[coordinate].hasShip == false)
       gameboard.board.splice(coordinate, 1, {
         hasShip: false,
         isHit: true,
         missedShot: true,
       });
+    else {
+      gameboard.board[coordinate].isHit = true;
+      gameboard.board[coordinate].ship.hit();
+    }
   };
 
-  return { getBoard, shipLocation, shipPlacement, receiveAttack };
+  const checkShipState = () => {
+    return gameboard.board
+      .filter((el) => el.hasShip)
+      .map((el) => el.ship)
+      .every((el) => el.isSunk());
+  };
+
+  return {
+    getBoard,
+    shipPlacement,
+    receiveAttack,
+    checkShipState,
+  };
 }
 
 export { gameBoard };
