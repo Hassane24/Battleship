@@ -1,11 +1,17 @@
 import { player } from "../Modules/Player";
 
-test("whoIsPlaying method returns true if it's someone's role and false if it isnt", () => {
-  expect(player().whoIsPlaying()).toBeFalsy();
-  expect(player(true).whoIsPlaying()).toBeTruthy();
+test("getName method should return the name of the player", () => {
+  expect(player("Kobe").getName()).toBe("Kobe");
 });
 
-test("switchRole method should reverse the boolean value of state.playing", () => {
-  expect(player().switchRoles()).toBeTruthy();
-  expect(player(true).switchRoles()).toBeFalsy();
+test("setName method should change the name of the player", () => {
+  expect(player("Kobe").setName("Mike")).toBe("Mike");
+});
+
+test("attackEnemy method should mark the given coordinate of the enemy board as hit", () => {
+  const player1 = player("1");
+  const player2 = player("2");
+  const player2Board = player2.getPlayerGb().getBoard();
+  player1.attackEnemy(player2.getPlayerGb(), 0);
+  expect(player2Board[0].isHit).toBeTruthy();
 });

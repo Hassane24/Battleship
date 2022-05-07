@@ -1,17 +1,27 @@
-function player(playing = false) {
-  const state = {
-    playing,
+import { gameBoard } from "./Gameboard";
+function player(name) {
+  const playerInfo = {
+    name,
+    board: gameBoard(),
   };
 
-  const whoIsPlaying = () => {
-    return state.playing;
+  const getName = () => {
+    return playerInfo.name;
   };
 
-  const switchRoles = () => {
-    return (state.playing = !state.playing);
+  const getPlayerGb = () => {
+    return playerInfo.board;
   };
 
-  return { whoIsPlaying, switchRoles };
+  const setName = (value) => {
+    return (playerInfo.name = value);
+  };
+
+  const attackEnemy = (enemyBoard, shot) => {
+    enemyBoard.receiveAttack(shot);
+  };
+
+  return { getName, setName, getPlayerGb, attackEnemy };
 }
 
 export { player };

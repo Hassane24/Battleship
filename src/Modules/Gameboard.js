@@ -16,7 +16,7 @@ function gameBoard() {
   };
 
   const shipLocation = (orientation, startingPosition, ship) => {
-    // returns an array of numbers that represent indexes
+    // returns an array of numbers that represent indexes on the board
     const location = [];
     for (let i = 0; i < ship.getLength(); i++) {
       orientation === "horizontal"
