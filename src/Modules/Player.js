@@ -1,5 +1,5 @@
 import { gameBoard } from "./Gameboard";
-function player(name) {
+function player(name = "computer") {
   const playerInfo = {
     name,
     board: gameBoard(),
@@ -24,4 +24,20 @@ function player(name) {
   return { getName, setName, getPlayerGb, attackEnemy };
 }
 
-export { player };
+function computerPlayer() {
+  let indexes = [];
+  function randomIndex() {
+    let index = Math.floor(Math.random(1 * 100));
+    indexes.push(index);
+  }
+
+  function checkRandomIndex(value, array) {
+    for (let i = 0; i < array.length; i++) {
+      if (value == array[i]) return false;
+      return true;
+    }
+  }
+  return { ...player(), checkRandomIndex };
+}
+
+export { player, computerPlayer };
