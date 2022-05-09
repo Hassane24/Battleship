@@ -18,6 +18,7 @@ function player(name = "computer") {
   };
 
   const attackEnemy = (enemyBoard, shot) => {
+    if (enemyBoard.getBoard()[shot].missedShot) return;
     enemyBoard.receiveAttack(shot);
   };
 
@@ -25,18 +26,21 @@ function player(name = "computer") {
 }
 
 function computerPlayer() {
-  let indexes = [];
-  function randomIndex() {
-    let index = Math.floor(Math.random(1 * 100));
-    indexes.push(index);
-  }
+  let shotsFired = [];
+  const randomIndex = () => {
+    let index = Math.floor(Math.random() * 100);
+    if (checkRandomIndex(index, shotsFired)) shotsFired.push(index);
+    if (!checkRandomIndex(index, shotsFired)) return randomIndex();
+    return index;
+  };
 
-  function checkRandomIndex(value, array) {
+  const checkRandomIndex = (value, array) => {
     for (let i = 0; i < array.length; i++) {
       if (value == array[i]) return false;
       return true;
     }
-  }
+  };
+
   return { ...player(), checkRandomIndex };
 }
 
