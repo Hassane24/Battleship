@@ -38,6 +38,27 @@ function gameBoard() {
     }
   };
 
+  const checkForValidPlacement = (locationArray) => {
+    const collisions = [9, 19, 29, 39, 49, 59, 69, 79, 89];
+    if (locationArray.some((loc) => !gameboard.board[loc])) {
+      return false;
+    } else if (locationArray.some((loc) => gameboard.board[loc].hasShip)) {
+      return false;
+    } else if (
+      collisions.some((num) => {
+        return [num, num + 1].every((combination) =>
+          locationArray.includes(combination)
+        );
+      })
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const randomShipPlacement = () => {};
+
   const receiveAttack = (coordinate) => {
     if (gameboard.board[coordinate].hasShip == false)
       gameboard.board.splice(coordinate, 1, {
@@ -63,6 +84,7 @@ function gameBoard() {
     shipPlacement,
     receiveAttack,
     checkShipState,
+    checkForValidPlacement,
   };
 }
 

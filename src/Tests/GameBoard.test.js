@@ -61,3 +61,22 @@ test("checkShipState method should return true if all ships have sunk", () => {
   br.receiveAttack(1);
   expect(br.checkShipState()).toBeTruthy();
 });
+
+test("checkCollision method shouldn't allow ship placement if a ship collides with another", () => {
+  const br = gameBoard();
+  const array = br.getBoard();
+  array[1].hasShip = true;
+  expect(br.checkForValidPlacement([1, 2, 3])).toBeFalsy();
+});
+
+test("checkCollision method shouldn't allow ship placement if a ship exceeds the board limit (X axis)", () => {
+  const br = gameBoard();
+  const array = br.getBoard();
+  expect(br.checkForValidPlacement([99, 100, 101])).toBeFalsy();
+});
+
+test("checkCollision method shouldn't allow ship placement if a ship exceeds the board limit (Y axis)", () => {
+  const br = gameBoard();
+  const array = br.getBoard();
+  expect(br.checkForValidPlacement([99, 109, 119])).toBeFalsy();
+});
