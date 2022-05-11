@@ -2,7 +2,7 @@ import { ships } from "./Ships";
 function gameBoard() {
   const gameboard = {
     board: Array(100).fill({ hasShip: false, isHit: false }),
-    shipStore: [
+    fleet: [
       ships("carrier", 5),
       ships("battleship", 4),
       ships("cruiser", 3),
@@ -13,6 +13,10 @@ function gameBoard() {
 
   const getBoard = () => {
     return gameboard.board;
+  };
+
+  const getFleet = () => {
+    return gameboard.fleet;
   };
 
   const shipLocation = (orientation, startingPosition, ship) => {
@@ -57,7 +61,44 @@ function gameBoard() {
     }
   };
 
-  const randomShipPlacement = () => {};
+  const randomShipPlacement = (ship) => {
+    let allPossibleLocations = [];
+
+    // returns a random orientation
+
+    const randomOrientation = () =>
+      ["horiz", "vert"][Math.floor(Math.random() * 2)];
+
+    // finds all possible locations a ship can be placed at
+
+    const findAllPossibleLocations = (orientation) => {
+      for (let i = 0; i < 100 - ship.getLength(); i++) {
+        let locationArray = [];
+
+        if (orientation === "horiz")
+          for (let j = 0; j < ship.getLength(); j++) {
+            locationArray.push(i + j);
+          }
+        else
+          for (let j = 0; j < ship.getLength(); j++) {
+            locationArray.push(i + j * 10);
+          }
+
+        // checks whether the created location is valid or not
+
+        if (checkForValidPlacement(locationArray))
+          allPossibleLocations.push(locationArray);
+      }
+
+      // returns one random ship location out of many
+
+      return allPossibleLocations[
+        Math.floor(Math.random() * allPossibleLocations.length)
+      ];
+    };
+
+    return allPossibleLocations(randomOrientation());
+  };
 
   const receiveAttack = (coordinate) => {
     if (gameboard.board[coordinate].hasShip == false)
@@ -81,10 +122,12 @@ function gameBoard() {
 
   return {
     getBoard,
+    getFleet,
     shipPlacement,
     receiveAttack,
     checkShipState,
     checkForValidPlacement,
+    randomShipPlacement,
   };
 }
 
