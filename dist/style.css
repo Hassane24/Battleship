@@ -53,11 +53,16 @@ body {
 }
 
 .board {
-  width: 500px;
+  width: 400px;
   aspect-ratio: 1;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
+}
+
+.cell:hover {
+  cursor: crosshair;
+  background-color: #2a2b2b;
+  opacity: 0.9;
 }
 
 .cell.empty {
