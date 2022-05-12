@@ -1,4 +1,4 @@
-import { ships } from "../Modules/Ships";
+import { ships } from "../FactoryFunctions/Ships";
 
 test("getLength method should return the length of the ship", () => {
   expect(ships("carrier", 5).getLength()).toBe(5);

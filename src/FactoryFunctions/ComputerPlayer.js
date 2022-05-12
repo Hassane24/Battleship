@@ -1,17 +1,22 @@
 import { gameBoard } from "./Gameboard";
-function computerPlayer() {
+function computerPlayer(playing) {
   const playerInfo = {
     name: "computer",
     board: gameBoard(),
+    playing,
     shotsFired: [],
+  };
+
+  const whoIsPlaying = () => {
+    return playerInfo.playing;
+  };
+
+  const switchRoles = () => {
+    playerInfo.playing = !playerInfo.playing;
   };
 
   const getName = () => {
     return playerInfo.name;
-  };
-
-  const getPlayerGb = () => {
-    return playerInfo.board;
   };
 
   const randomIndex = () => {
@@ -33,6 +38,6 @@ function computerPlayer() {
     enemyBoard.receiveAttack(randomIndex());
   };
 
-  return { getName, getPlayerGb, attackEnemy };
+  return { getName, attackEnemy, whoIsPlaying, switchRoles };
 }
 export { computerPlayer };

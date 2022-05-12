@@ -1,5 +1,5 @@
-import { gameBoard } from "../Modules/Gameboard";
-import { ships } from "../Modules/Ships";
+import { gameBoard } from "../FactoryFunctions/Gameboard";
+import { ships, Ships } from "../FactoryFunctions/Ships";
 
 test("getBoard method should return an array of arrays", () => {
   const array = [];
@@ -14,7 +14,8 @@ test("getBoard method should return an array of arrays", () => {
 test("shipPlacement method should place ships at the indexes given by the shipLocation method X axis", () => {
   const br = gameBoard();
   const array = br.getBoard();
-  br.shipPlacement("carrier", 2, "horizontal", 0);
+  br.shipPlacement("horizontal", 0, ships("carrier", 2));
+
   expect(array[0].hasShip).toBeTruthy();
   expect(array[1].hasShip).toBeTruthy();
   expect(array[3].hasShip).toBeFalsy();
@@ -23,7 +24,7 @@ test("shipPlacement method should place ships at the indexes given by the shipLo
 test("shipPlacement method should place ships at the indexes given by the shipLocation method Y axis", () => {
   const br = gameBoard();
   const array = br.getBoard();
-  br.shipPlacement("carrier", 2, "vertical", 0);
+  br.shipPlacement("vertical", 0, ships("carrier", 2));
   expect(array[0].hasShip).toBeTruthy();
   expect(array[10].hasShip).toBeTruthy();
 });
@@ -50,7 +51,7 @@ test("receiveAttack method should keep track of missed shots", () => {
 test("receiveAttack method should invoke the hit method on the ships if they're hit", () => {
   const br = gameBoard();
   const array = br.getBoard();
-  br.shipPlacement("carrier", 2, "vertical", 0);
+  br.shipPlacement("vertical", 0, ships("carrier", 2));
   br.receiveAttack(0);
   br.receiveAttack(10);
   expect(array[0].ship.getHits()).toEqual(["hit", "hit"]);
@@ -58,9 +59,9 @@ test("receiveAttack method should invoke the hit method on the ships if they're 
 
 test("checkShipState method should return true if all ships have sunk", () => {
   const br = gameBoard();
-  br.shipPlacement("carrier", 2, "horizontal", 0);
+  br.shipPlacement("vertical", 0, ships("carrier", 2));
   br.receiveAttack(0);
-  br.receiveAttack(1);
+  br.receiveAttack(10);
   expect(br.checkShipState()).toBeTruthy();
 });
 

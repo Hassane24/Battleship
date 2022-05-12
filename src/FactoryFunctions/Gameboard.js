@@ -30,8 +30,7 @@ function gameBoard() {
     return location;
   };
 
-  const shipPlacement = (name, length, orientation, startingPosition, Ship) => {
-    Ship = ships(name, length);
+  const shipPlacement = (orientation, startingPosition, Ship) => {
     const location = shipLocation(orientation, startingPosition, Ship);
     for (let j = 0; j < location.length; j++) {
       gameboard.board.splice(location[j], 1, {
@@ -97,7 +96,14 @@ function gameBoard() {
       ];
     };
 
-    return allPossibleLocations(randomOrientation());
+    let location = findAllPossibleLocations(randomOrientation());
+    for (let j = 0; j < location.length; j++) {
+      gameboard.board.splice(location[j], 1, {
+        hasShip: true,
+        isHit: false,
+        ship: ship,
+      });
+    }
   };
 
   const receiveAttack = (coordinate) => {

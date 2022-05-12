@@ -1,16 +1,21 @@
 import { gameBoard } from "./Gameboard";
-function player(name) {
+function player(name, playing) {
   const playerInfo = {
     name,
     board: gameBoard(),
+    playing,
+  };
+
+  const whoIsPlaying = () => {
+    return playerInfo.playing;
+  };
+
+  const switchRoles = () => {
+    playerInfo.playing = !playerInfo.playing;
   };
 
   const getName = () => {
     return playerInfo.name;
-  };
-
-  const getPlayerGb = () => {
-    return playerInfo.board;
   };
 
   const setName = (value) => {
@@ -21,7 +26,13 @@ function player(name) {
     enemyBoard.receiveAttack(shot);
   };
 
-  return { getName, setName, getPlayerGb, attackEnemy };
+  return {
+    getName,
+    setName,
+    attackEnemy,
+    whoIsPlaying,
+    switchRoles,
+  };
 }
 
 export { player };
