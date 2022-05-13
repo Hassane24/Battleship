@@ -12,7 +12,7 @@ function computerPlayer(playing) {
   };
 
   const switchRoles = () => {
-    playerInfo.playing = !playerInfo.playing;
+    return (playerInfo.playing = !playerInfo.playing);
   };
 
   const getName = () => {

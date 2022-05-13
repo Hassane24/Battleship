@@ -9,10 +9,15 @@ function gameBoard() {
       ships("submarine", 3),
       ships("destroyer", 2),
     ],
+    locations: [],
   };
 
   const getBoard = () => {
     return gameboard.board;
+  };
+
+  const getShipLocations = () => {
+    return gameboard.locations;
   };
 
   const getFleet = () => {
@@ -31,6 +36,7 @@ function gameBoard() {
   };
 
   const shipPlacement = (orientation, startingPosition, Ship) => {
+    const shipName = Ship.getName();
     const location = shipLocation(orientation, startingPosition, Ship);
     for (let j = 0; j < location.length; j++) {
       gameboard.board.splice(location[j], 1, {
@@ -39,6 +45,7 @@ function gameBoard() {
         ship: Ship,
       });
     }
+    gameboard.locations.push({ shipName, location });
   };
 
   const checkForValidPlacement = (locationArray) => {
@@ -129,6 +136,7 @@ function gameBoard() {
   return {
     getBoard,
     getFleet,
+    getShipLocations,
     shipPlacement,
     receiveAttack,
     checkShipState,

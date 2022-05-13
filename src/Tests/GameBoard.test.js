@@ -1,5 +1,5 @@
 import { gameBoard } from "../FactoryFunctions/Gameboard";
-import { ships, Ships } from "../FactoryFunctions/Ships";
+import { ships } from "../FactoryFunctions/Ships";
 
 test("getBoard method should return an array of arrays", () => {
   const array = [];
@@ -7,6 +7,15 @@ test("getBoard method should return an array of arrays", () => {
     array.push({ hasShip: false, isHit: false });
   }
   expect(gameBoard().getBoard()).toEqual(array);
+});
+
+test("getShipLocations method should return an array of objects", () => {
+  expect(gameBoard().getShipLocations()).toEqual([]);
+  const br = gameBoard();
+  br.shipPlacement("horizontal", 0, ships("carrier", 5));
+  expect(br.getShipLocations()).toEqual([
+    { shipName: "carrier", location: [0, 1, 2, 3, 4] },
+  ]);
 });
 
 // shipPlacement tests
