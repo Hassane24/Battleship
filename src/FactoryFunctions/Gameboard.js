@@ -17,7 +17,7 @@ function gameBoard() {
   };
 
   const getShipLocations = () => {
-    return gameboard.locations;
+    return gameboard.locations.map((ship) => ship.location).flat();
   };
 
   const getFleet = () => {
@@ -46,6 +46,7 @@ function gameBoard() {
       });
     }
     gameboard.locations.push({ shipName, location });
+    return location;
   };
 
   const checkForValidPlacement = (locationArray) => {

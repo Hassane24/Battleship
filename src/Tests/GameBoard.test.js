@@ -13,9 +13,9 @@ test("getShipLocations method should return an array of objects", () => {
   expect(gameBoard().getShipLocations()).toEqual([]);
   const br = gameBoard();
   br.shipPlacement("horizontal", 0, ships("carrier", 5));
-  expect(br.getShipLocations()).toEqual([
-    { shipName: "carrier", location: [0, 1, 2, 3, 4] },
-  ]);
+  br.shipPlacement("horizontal", 10, ships("carrier", 5));
+
+  expect(br.getShipLocations()).toEqual([0, 1, 2, 3, 4, 10, 11, 12, 13, 14]);
 });
 
 // shipPlacement tests

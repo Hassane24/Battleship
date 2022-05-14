@@ -21,6 +21,12 @@ function game(name) {
     return cpuBoard.getFleet();
   };
 
+  const getShipToPlace = () => {
+    const fleet = getPlayerFleet();
+    const ship = fleet[shipToPlace];
+    return ship;
+  };
+
   const placeCPUShips = () => {
     const cpuFleet = getCPUFleet();
     for (let ship = 0; ship < cpuFleet.length; ship++)
@@ -29,8 +35,8 @@ function game(name) {
 
   const placePlayerShips = (location, axis) => {
     const playerFleet = getPlayerFleet();
-    humanBoard.shipPlacement(axis, location, playerFleet[shipToPlace]);
     shipToPlace += 1;
+    return humanBoard.shipPlacement(axis, location, playerFleet[shipToPlace]);
   };
 
   const checkIfAllShipsArePlaced = () => {
@@ -80,6 +86,7 @@ function game(name) {
     getPlayerShipLocations,
     getCPUFleet,
     placeCPUShips,
+    getShipToPlace,
     placePlayerShips,
     checkIfAllShipsArePlaced,
     playerAttack,
@@ -92,3 +99,5 @@ function game(name) {
     isValidPlacement,
   };
 }
+
+export { game };
