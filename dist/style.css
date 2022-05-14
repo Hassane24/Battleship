@@ -75,6 +75,7 @@ body {
 .cpu-board {
   display: flex;
   flex-direction: column;
+  row-gap: 1rem;
   width: 600px;
 }
 
@@ -103,4 +104,31 @@ body {
 
 .cell.hit {
   background-color: #2a2b2b;
+}
+
+.axis,
+.start {
+  padding: 5px 40px;
+  font-size: 1.2rem;
+}
+
+.axis.hide,
+.start.hide {
+  cursor: auto;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.axis.hide:hover,
+.start.hide:hover {
+  cursor: auto;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.axis:hover,
+.start:hover {
+  cursor: pointer;
+  transform: scale(102%);
+  transition: ease-in-out 200ms;
 }
