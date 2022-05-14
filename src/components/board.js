@@ -15,5 +15,14 @@ function board(name) {
     boardDiv.appendChild(cell);
   }
   boardContainer.appendChild(boardDiv);
+  const controlButtonsDiv = document.createElement("div");
+  controlButtonsDiv.classList.add("control-buttons");
+  const axisButton = document.createElement("button");
+  axisButton.classList.add("axis");
+  const startButton = document.createElement("button");
+  startButton.classList.add("start");
+  controlButtonsDiv.appendChild(axisButton);
+  controlButtonsDiv.appendChild(startButton);
+  boardContainer.appendChild(controlButtonsDiv);
   return boardContainer;
 }
