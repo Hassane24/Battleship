@@ -79,6 +79,16 @@ body {
   width: 600px;
 }
 
+.cpu-board {
+  row-gap: 4.2rem;
+}
+
+.cpu-board.hide {
+  cursor: auto;
+  pointer-events: none;
+  opacity: 0;
+}
+
 .player-board span,
 .cpu-board span {
   font-weight: bold;
