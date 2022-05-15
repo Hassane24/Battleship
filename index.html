@@ -10,21 +10,23 @@
   </head>
   <body>
     <div class="battleship-text">Battleship</div>
-    <div class="player-name">
-      <label for="name">Choose your name</label>
-      <input type="text" name="name" id="name" autocomplete="off" />
-      <button>Play</button>
+    <div class="container">
+      <div class="player-name">
+        <label for="name">Choose your name</label>
+        <input type="text" name="name" id="name" autocomplete="off" />
+        <button>Play</button>
+      </div>
     </div>
     <div class="board-container">
-      <div class="player-board">
+      <div class="player-board hide">
         <span>Hassane</span>
         <div class="board"></div>
         <div class="control-buttons">
           <button class="axis">Change Axis</button>
-          <button class="start">Start playing</button>
+          <button class="start hide">Start playing</button>
         </div>
       </div>
-      <div class="cpu-board">
+      <div class="cpu-board hide">
         <span>CPU</span>
         <div class="board"></div>
       </div>
