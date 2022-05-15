@@ -83,7 +83,8 @@ body {
   row-gap: 4.2rem;
 }
 
-.cpu-board.hide {
+.cpu-board.hide,
+.player-board.hide {
   cursor: auto;
   pointer-events: none;
   opacity: 0;

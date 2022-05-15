@@ -7,8 +7,11 @@ function displayController() {
   const playerName = document.querySelector(".player-board > span");
   const playButton = document.querySelector(".player-name > button");
   const boardContainer = document.querySelector(".board-container");
-  const playerBoard = document.querySelector(".player-board");
-  const cpuBoard = document.querySelector(".cpu-board");
+  const playerBoard = document.querySelector(".player-board > .board");
+  const playerBoardContainer = document.querySelector(".player-board ");
+  const cpuBoard = document.querySelector(".cpu-board > .board");
+  const cpuBoardContainer = document.querySelector(".cpu-board ");
+  const container = document.querySelector(".container");
   let Game = game(nameInput.value);
   let axis = "horizontal";
   let shipToPlace = Game.getShipToPlace();
@@ -49,7 +52,20 @@ function displayController() {
     });
   };
 
-  return {};
+  const bindEvents = () => {
+    playButton.addEventListener("click", () => {
+      if (nameInput.value == "") return;
+      playerBoardContainer.classList.remove("hide");
+      playerName.textContent = nameInput.value;
+      renderPlayerBoard();
+      nameScreen.remove();
+      const placeShipsText = document.createElement("div");
+      placeShipsText.classList.add("place-ships-text");
+      placeShipsText.textContent = "Place your ships";
+      container.appendChild(placeShipsText);
+    });
+  };
+  return { bindEvents };
 }
 
 export { displayController };

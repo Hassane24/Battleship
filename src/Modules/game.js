@@ -44,11 +44,17 @@ function game(name) {
   };
 
   const playerAttack = (coordinate) => {
-    humanPlayer.attackEnemy(cpuBoard, coordinate);
+    if (playerRole()) {
+      humanPlayer.attackEnemy(cpuBoard, coordinate);
+      switchPlayersRoles();
+    }
   };
 
   const cpuAttack = () => {
-    cpuPlayer.attackEnemy(humanBoard);
+    if (cpuRole()) {
+      cpuPlayer.attackEnemy(humanBoard);
+      switchPlayersRoles();
+    }
   };
 
   const playerWon = () => {
