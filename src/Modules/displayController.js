@@ -30,6 +30,19 @@ function displayController() {
     }
   };
 
+  const generateBlock = (coordinate) => {
+    const location = [];
+    if (axis === "horizontal")
+      for (let i = 0; i < shipToPlace.getLength(); i++) {
+        location.push(coordinate + i);
+      }
+    else
+      for (let i = 0; i < array.length; i++) {
+        location.push(coordinate + i * 10);
+      }
+    return location;
+  };
+
   const placePlayerShips = (e) => {
     if (Game.checkIfAllShipsArePlaced()) return;
     const cell = e.target;
@@ -63,6 +76,19 @@ function displayController() {
       placeShipsText.classList.add("place-ships-text");
       placeShipsText.textContent = "Place your ships";
       container.appendChild(placeShipsText);
+    });
+
+    playerBoard.addEventListener("mouseover", (e) => {
+      const cell = e.target;
+      const startingPos = cell.getAttribute("coordinate");
+      const block = generateBlock(startingPos);
+      console.log(block);
+      block.forEach((square) => {
+        const cell = playerBoard.querySelector(
+          `.empty.cell[coordinate="${square}"]`
+        );
+        if (cell) cell.style.backgroundColor = "yellow";
+      });
     });
   };
   return { bindEvents };
