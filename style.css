@@ -103,18 +103,23 @@ body {
   grid-template-columns: repeat(10, 1fr);
 }
 
-.cell:hover {
+.cell.shoot {
   cursor: crosshair;
   background-color: #2a2b2b;
-  opacity: 0.9;
+  opacity: 0.7;
 }
 
 .cell.empty {
   border: 1px solid #2a2b2b;
 }
 
-.cell.hit {
-  background-color: #2a2b2b;
+.cell.hover {
+  cursor: pointer;
+}
+
+.cell.hover,
+.cell.placed {
+  background-color: #20886e;
 }
 
 .axis,
