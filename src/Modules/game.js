@@ -13,6 +13,10 @@ function game(name) {
     return humanBoard.getFleet();
   };
 
+  const getPlayerName = () => {
+    return humanPlayer.getName();
+  };
+
   const getPlayerShipLocations = () => {
     return humanBoard.getShipLocations();
   };
@@ -89,6 +93,7 @@ function game(name) {
 
   return {
     getPlayerFleet,
+    getPlayerName,
     getPlayerShipLocations,
     getCPUFleet,
     placeCPUShips,

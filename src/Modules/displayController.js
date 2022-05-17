@@ -13,7 +13,7 @@ function displayController() {
   const cpuBoardContainer = document.querySelector(".cpu-board ");
   const container = document.querySelector(".container");
   let Game = game(nameInput.value);
-  let axis = "vert";
+  let axis = "horizontal";
   let shipToPlace = Game.getShipToPlace();
 
   const renderPlayerBoard = () => {
@@ -43,11 +43,26 @@ function displayController() {
     return location;
   };
 
+  const checkForValidPlacement = (locationArray) => {
+    const collisions = [9, 19, 29, 39, 49, 59, 69, 79, 89, 99];
+    if (
+      collisions.some((num) => {
+        return [num, num + 1].every((combination) =>
+          locationArray.includes(combination)
+        );
+      })
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const placePlayerShips = (e) => {
     if (Game.checkIfAllShipsArePlaced()) return;
     const cell = e.target;
     if (cell.classList.contains("empty") && cell.classList.contains("cell")) {
-      const startingPos = cell.getAttribute("id");
+      const startingPos = Number(cell.getAttribute("id"));
       if (!Game.isValidPlacement(Game.placePlayerShips(startingPos, axis)))
         return;
       Game.placePlayerShips(startingPos, axis);
@@ -61,7 +76,7 @@ function displayController() {
     coordinates.forEach((coordinate) => {
       const cell = document.querySelector(`.cell.empty#${coordinate}`);
       cell.classList.remove("empty");
-      cell.classList.add("hit");
+      cell.classList.add("placed");
     });
   };
 
@@ -78,16 +93,31 @@ function displayController() {
       container.appendChild(placeShipsText);
     });
 
-    playerBoard.addEventListener("mouseover", (e) => {
+    playerBoard.addEventListener("mouseout", (e) => {
       const cell = e.target;
-      const startingPoint = cell.getAttribute("coordinate");
+      const startingPoint = Number(cell.getAttribute("coordinate"));
       const block = generateBlock(startingPoint);
       block.forEach((square) => {
         const cell = playerBoard.querySelector(
           `.empty.cell[coordinate="${square}"]`
         );
-        if (cell) cell.style.backgroundColor = "yellow";
+        if (cell) cell.classList.remove("hover");
       });
+    });
+
+    playerBoard.addEventListener("mouseover", (e) => {
+      const cell = e.target;
+      if (cell.classList.contains("cell", "empty")) {
+        const startingPoint = Number(cell.getAttribute("coordinate"));
+        const block = generateBlock(startingPoint);
+        if (!checkForValidPlacement(block)) return;
+        block.forEach((square) => {
+          const cell = playerBoard.querySelector(
+            `.empty.cell[coordinate="${square}"]`
+          );
+          if (cell) cell.classList.add("hover");
+        });
+      }
     });
   };
   return { bindEvents };
