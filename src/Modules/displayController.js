@@ -13,7 +13,7 @@ function displayController() {
   const cpuBoardContainer = document.querySelector(".cpu-board ");
   const container = document.querySelector(".container");
   let Game = game(nameInput.value);
-  let axis = "horizontal";
+  let axis = "vert";
   let shipToPlace = Game.getShipToPlace();
 
   const renderPlayerBoard = () => {
@@ -37,7 +37,7 @@ function displayController() {
         location.push(coordinate + i);
       }
     else
-      for (let i = 0; i < array.length; i++) {
+      for (let i = 0; i < shipToPlace.getLength(); i++) {
         location.push(coordinate + i * 10);
       }
     return location;
@@ -80,9 +80,8 @@ function displayController() {
 
     playerBoard.addEventListener("mouseover", (e) => {
       const cell = e.target;
-      const startingPos = cell.getAttribute("coordinate");
-      const block = generateBlock(startingPos);
-      console.log(block);
+      const startingPoint = cell.getAttribute("coordinate");
+      const block = generateBlock(startingPoint);
       block.forEach((square) => {
         const cell = playerBoard.querySelector(
           `.empty.cell[coordinate="${square}"]`
