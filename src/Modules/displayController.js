@@ -70,6 +70,11 @@ function displayController() {
     });
   };
 
+  const changeOrientation = () => {
+    if (axis === "horizontal") return (axis = "vert");
+    else return (axis = "horizontal");
+  };
+
   const bindEvents = () => {
     playButton.addEventListener("click", () => {
       if (nameInput.value == "") return;
@@ -124,6 +129,8 @@ function displayController() {
         shipToPlace = Game.getShipToPlace();
       }
     });
+
+    changeAxis.addEventListener("click", changeOrientation);
   };
   return { bindEvents };
 }
