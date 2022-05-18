@@ -12,6 +12,8 @@ function displayController() {
   const cpuBoard = document.querySelector(".cpu-board > .board");
   const cpuBoardContainer = document.querySelector(".cpu-board ");
   const container = document.querySelector(".container");
+  const changeAxis = document.querySelector(".axis");
+  const startButton = document.querySelector(".start");
   let Game = game(nameInput.value);
   let axis = "horizontal";
   let shipToPlace = Game.getShipToPlace();
@@ -58,24 +60,12 @@ function displayController() {
     }
   };
 
-  const placePlayerShips = (e) => {
-    if (Game.checkIfAllShipsArePlaced()) return;
-    const cell = e.target;
-    if (cell.classList.contains("empty") && cell.classList.contains("cell")) {
-      const startingPos = Number(cell.getAttribute("id"));
-      if (!Game.isValidPlacement(Game.placePlayerShips(startingPos, axis)))
-        return;
-      Game.placePlayerShips(startingPos, axis);
-      renderShips();
-      shipToPlace = Game.getShipToPlace;
-    }
-  };
-
   const renderShips = () => {
     const coordinates = Game.getPlayerShipLocations();
     coordinates.forEach((coordinate) => {
-      const cell = document.querySelector(`.cell.empty#${coordinate}`);
-      cell.classList.remove("empty");
+      const cell = document.querySelector(
+        `.cell.empty[coordinate="${coordinate}"]`
+      );
       cell.classList.add("placed");
     });
   };
@@ -94,6 +84,7 @@ function displayController() {
     });
 
     playerBoard.addEventListener("mouseout", (e) => {
+      if (Game.checkIfAllShipsArePlaced()) return;
       const cell = e.target;
       const startingPoint = Number(cell.getAttribute("coordinate"));
       const block = generateBlock(startingPoint);
@@ -106,6 +97,7 @@ function displayController() {
     });
 
     playerBoard.addEventListener("mouseover", (e) => {
+      if (Game.checkIfAllShipsArePlaced()) return;
       const cell = e.target;
       if (cell.classList.contains("cell", "empty")) {
         const startingPoint = Number(cell.getAttribute("coordinate"));
@@ -117,6 +109,19 @@ function displayController() {
           );
           if (cell) cell.classList.add("hover");
         });
+      }
+    });
+
+    playerBoard.addEventListener("click", (e) => {
+      if (Game.checkIfAllShipsArePlaced()) return;
+      const cell = e.target;
+      if (cell.classList.contains("cell", "empty")) {
+        const startingPoint = Number(cell.getAttribute("coordinate"));
+        const block = generateBlock(startingPoint);
+        if (!Game.isValidPlacement(block)) return;
+        Game.placePlayerShips(startingPoint, axis);
+        renderShips();
+        shipToPlace = Game.getShipToPlace();
       }
     });
   };

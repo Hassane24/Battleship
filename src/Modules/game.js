@@ -39,8 +39,8 @@ function game(name) {
 
   const placePlayerShips = (location, axis) => {
     const playerFleet = getPlayerFleet();
+    humanBoard.shipPlacement(axis, location, playerFleet[shipToPlace]);
     shipToPlace += 1;
-    return humanBoard.shipPlacement(axis, location, playerFleet[shipToPlace]);
   };
 
   const checkIfAllShipsArePlaced = () => {
@@ -88,7 +88,7 @@ function game(name) {
   };
 
   const isValidPlacement = (location) => {
-    humanBoard.checkForValidPlacement(location);
+    return humanBoard.checkForValidPlacement(location);
   };
 
   return {

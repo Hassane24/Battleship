@@ -28,7 +28,7 @@ function ships(name, length) {
     if (ship.hits.length == ship.length) return (ship.sunken = true);
   };
 
-  return { getLength, getName, getHits, shipState, hit, isSunk };
+  return { getLength, getName, getHits, shipState, hit, isSunk, length };
 }
 
 export { ships };

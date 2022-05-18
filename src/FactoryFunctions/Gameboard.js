@@ -17,7 +17,7 @@ function gameBoard() {
   };
 
   const getShipLocations = () => {
-    return gameboard.locations.map((ship) => ship.location).flat();
+    return gameboard.locations.flat();
   };
 
   const getFleet = () => {
@@ -36,7 +36,6 @@ function gameBoard() {
   };
 
   const shipPlacement = (orientation, startingPosition, Ship) => {
-    const shipName = Ship.getName();
     const location = shipLocation(orientation, startingPosition, Ship);
     for (let j = 0; j < location.length; j++) {
       gameboard.board.splice(location[j], 1, {
@@ -45,7 +44,7 @@ function gameBoard() {
         ship: Ship,
       });
     }
-    gameboard.locations.push({ shipName, location });
+    gameboard.locations.push(location);
     return location;
   };
 
