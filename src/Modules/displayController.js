@@ -75,6 +75,15 @@ function displayController() {
     else return (axis = "horizontal");
   };
 
+  const startBattle = () => {
+    const placeShipsText = document.querySelector(".place-ships-text");
+    placeShipsText.remove();
+    renderCpuBoard();
+    cpuBoardContainer.classList.remove("hide");
+    changeAxis.classList.add("hide");
+    startButton.classList.add("hide");
+  };
+
   const bindEvents = () => {
     playButton.addEventListener("click", () => {
       if (nameInput.value == "") return;
@@ -127,10 +136,14 @@ function displayController() {
         Game.placePlayerShips(startingPoint, axis);
         renderShips();
         shipToPlace = Game.getShipToPlace();
+        if (Game.checkIfAllShipsArePlaced())
+          startButton.classList.remove("hide");
       }
     });
 
     changeAxis.addEventListener("click", changeOrientation);
+
+    startButton.addEventListener("click", startBattle);
   };
   return { bindEvents };
 }
