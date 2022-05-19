@@ -111,6 +111,7 @@ function gameBoard() {
         ship: ship,
       });
     }
+    gameboard.locations.push(location);
   };
 
   const receiveAttack = (coordinate) => {
@@ -133,6 +134,23 @@ function gameBoard() {
       .every((el) => el.isSunk());
   };
 
+  const getMisses = () => {
+    const board = gameboard.board;
+    const misses = [];
+    for (let i = 0; i < board.length; i++)
+      if (board[i].missedShot) misses.push(i);
+    return misses;
+  };
+
+  const getHits = () => {
+    const board = gameboard.board;
+    const hits = [];
+    for (let i = 0; i < board.length; i++) {
+      if (board[i].hasShip && board[i].isHit) hits.push(i);
+    }
+    return hits;
+  };
+
   return {
     getBoard,
     getFleet,
@@ -142,6 +160,8 @@ function gameBoard() {
     checkShipState,
     checkForValidPlacement,
     randomShipPlacement,
+    getHits,
+    getMisses,
   };
 }
 

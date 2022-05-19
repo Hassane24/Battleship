@@ -12,10 +12,6 @@ test("getHits method should return the amount of hits", () => {
   expect(ships("carrier", 5).getHits()).toEqual([]);
 });
 
-test("shipState method should return the state of the ship", () => {
-  expect(ships("carrier", 5).shipState()).toBeFalsy();
-});
-
 test("hit method should should push 'hit' in the hits array", () => {
   const carrier = ships("carrier", 5);
   carrier.hit();
@@ -23,9 +19,8 @@ test("hit method should should push 'hit' in the hits array", () => {
 });
 
 test("isSunk method should switch the shipState to true if all positions are marked as 'hit'", () => {
-  const carrier = ships("carrier", 1);
+  const carrier = ships("carrier", 2);
   carrier.hit(0);
   carrier.hit(1);
-  carrier.isSunk();
-  expect(carrier.shipState()).toBeTruthy();
+  expect(carrier.isSunk()).toBe(true);
 });

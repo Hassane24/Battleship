@@ -91,6 +91,22 @@ function game(name) {
     return humanBoard.checkForValidPlacement(location);
   };
 
+  const getPlayerMisses = () => {
+    return cpuBoard.getMisses();
+  };
+
+  const getCpuMisses = () => {
+    return humanBoard.getMisses();
+  };
+
+  const getPlayerHits = () => {
+    return cpuBoard.getHits();
+  };
+
+  const getCpuHits = () => {
+    return humanBoard.getHits();
+  };
+
   return {
     getPlayerFleet,
     getPlayerName,
@@ -108,6 +124,10 @@ function game(name) {
     cpuRole,
     switchPlayersRoles,
     isValidPlacement,
+    getPlayerMisses,
+    getCpuMisses,
+    getPlayerHits,
+    getCpuHits,
   };
 }
 

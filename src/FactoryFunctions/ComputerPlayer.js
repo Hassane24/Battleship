@@ -19,23 +19,20 @@ function computerPlayer(playing) {
     return playerInfo.name;
   };
 
-  const randomIndex = () => {
-    let index = Math.floor(Math.random() * 100);
-    if (checkRandomIndex(index, playerInfo.shotsFired))
-      playerInfo.shotsFired.push(index);
-    if (!checkRandomIndex(index, playerInfo.shotsFired)) return randomIndex();
-    return index;
-  };
+  const includes = (coordinates, coordinate) =>
+    coordinates.some((cell) => cell.toString() === coordinate.toString());
 
-  const checkRandomIndex = (value, array) => {
-    for (let i = 0; i < array.length; i++) {
-      if (value == array[i]) return false;
-      return true;
-    }
-  };
+  const randomIndex = () => Math.floor(Math.random() * 100);
 
+  const checkRandomIndex = (board) => {
+    let coordiate;
+    coordiate = randomIndex();
+    const damagedCells = [...board.getMisses(), ...board.getHits()];
+    while (includes(damagedCells, coordiate)) coordiate = randomIndex();
+    return coordiate;
+  };
   const attackEnemy = (enemyBoard) => {
-    enemyBoard.receiveAttack(randomIndex());
+    enemyBoard.receiveAttack(checkRandomIndex(enemyBoard));
   };
 
   return { getName, attackEnemy, whoIsPlaying, switchRoles };

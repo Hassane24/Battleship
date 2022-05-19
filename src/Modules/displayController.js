@@ -82,6 +82,11 @@ function displayController() {
     cpuBoardContainer.classList.remove("hide");
     changeAxis.classList.add("hide");
     startButton.classList.add("hide");
+    const cpuCells = cpuBoard.querySelectorAll(".empty.cell");
+    cpuCells.forEach((cell) => cell.classList.add("shoot"));
+    Game.placeCPUShips();
+    const playerCells = playerBoard.querySelectorAll(".hover");
+    playerCells.forEach((cell) => cell.classList.remove("hover"));
   };
 
   const bindEvents = () => {
@@ -144,6 +149,52 @@ function displayController() {
     changeAxis.addEventListener("click", changeOrientation);
 
     startButton.addEventListener("click", startBattle);
+
+    cpuBoard.addEventListener("click", (e) => {
+      const cellToAttack = Number(e.target.getAttribute("coordinate"));
+      if (Game.cpuWon()) return (container.textContent = "Computer Won");
+      if (Game.playerWon()) return (container.textContent = "You won");
+      if (e.target.classList.contains("empty")) {
+        if (Game.playerRole()) {
+          Game.playerAttack(cellToAttack);
+          const playerHits = Game.getPlayerHits();
+          const playerMisses = Game.getPlayerMisses();
+          playerHits.forEach((hit) => {
+            const hitCell = cpuBoard.querySelector(
+              `.cell.empty[coordinate="${hit}"]`
+            );
+            hitCell.classList.remove("empty");
+            hitCell.classList.add("hit");
+          });
+          playerMisses.forEach((miss) => {
+            const hitCell = cpuBoard.querySelector(
+              `.cell.empty[coordinate="${miss}"]`
+            );
+            hitCell.classList.remove("empty");
+            hitCell.classList.add("miss");
+          });
+        }
+
+        if (Game.cpuRole()) {
+          Game.cpuAttack();
+          const cpuHits = Game.getCpuHits();
+          const cpuMisses = Game.getCpuMisses();
+          cpuHits.forEach((hit) => {
+            const hitCell = playerBoard.querySelector(
+              `.cell.empty[coordinate="${hit}"]`
+            );
+            hitCell.classList.remove("placed");
+            hitCell.classList.add("hit");
+          });
+          cpuMisses.forEach((miss) => {
+            const hitCell = playerBoard.querySelector(
+              `.cell.empty[coordinate="${miss}"]`
+            );
+            hitCell.classList.add("miss");
+          });
+        }
+      }
+    });
   };
   return { bindEvents };
 }

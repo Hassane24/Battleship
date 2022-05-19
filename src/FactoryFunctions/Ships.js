@@ -3,7 +3,6 @@ function ships(name, length) {
     name,
     length,
     hits: [],
-    sunken: false,
   };
 
   const getName = () => {
@@ -15,20 +14,16 @@ function ships(name, length) {
   const getHits = () => {
     return ship.hits;
   };
-  const shipState = () => {
-    return ship.sunken;
-  };
 
   const hit = () => {
     ship.hits.push("hit");
-    isSunk();
   };
 
   const isSunk = () => {
-    if (ship.hits.length == ship.length) return (ship.sunken = true);
+    return ship.hits.length === ship.length;
   };
 
-  return { getLength, getName, getHits, shipState, hit, isSunk, length };
+  return { getLength, getName, getHits, hit, isSunk };
 }
 
 export { ships };
