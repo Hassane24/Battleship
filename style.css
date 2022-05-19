@@ -79,10 +79,6 @@ body {
   width: 600px;
 }
 
-.cpu-board {
-  /* row-gap: 4.2rem; */
-}
-
 .cpu-board.hide,
 .player-board.hide {
   cursor: auto;
@@ -96,6 +92,12 @@ body {
   font-size: 1.5rem;
 }
 
+.container {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 1rem;
+}
+
 .board {
   width: 400px;
   aspect-ratio: 1;
@@ -105,8 +107,19 @@ body {
 
 .cell.shoot {
   cursor: crosshair;
+}
+
+.cell.shoot:hover {
   background-color: #2a2b2b;
   opacity: 0.7;
+}
+
+.cell.hit {
+  background-color: red;
+}
+
+.cell.miss {
+  background-color: #472a46;
 }
 
 .cell.empty {
