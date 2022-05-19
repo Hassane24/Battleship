@@ -163,14 +163,12 @@ function displayController() {
             const hitCell = cpuBoard.querySelector(
               `.cell.empty[coordinate="${hit}"]`
             );
-            hitCell.classList.remove("empty");
             hitCell.classList.add("hit");
           });
           playerMisses.forEach((miss) => {
             const hitCell = cpuBoard.querySelector(
               `.cell.empty[coordinate="${miss}"]`
             );
-            hitCell.classList.remove("empty");
             hitCell.classList.add("miss");
           });
         }
