@@ -154,7 +154,12 @@ function displayController() {
       const cellToAttack = Number(e.target.getAttribute("coordinate"));
       if (Game.cpuWon()) return (container.textContent = "Computer Won");
       if (Game.playerWon()) return (container.textContent = "You won");
-      if (e.target.classList.contains("empty")) {
+      console.log(e.target.classList);
+      if (
+        e.target.classList.contains("empty") &&
+        !e.target.classList.contains("miss") &&
+        !e.target.classList.contains("hit")
+      ) {
         if (Game.playerRole()) {
           Game.playerAttack(cellToAttack);
           const playerHits = Game.getPlayerHits();
